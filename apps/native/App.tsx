@@ -1,22 +1,36 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View ,ActivityIndicator, Dimensions} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "@repo/ui";
+import { WebView } from 'react-native-webview';
+import { useState } from "react";
 
-export default function Native() {
+
+
+const App = () => {
+  const [loading, setLoading] = useState(true);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Native</Text>
-      <Button
-        onClick={() => {
-          console.log("Pressed!");
-          alert("Pressed!");
-        }}
-        text="Boop"
+      {loading && (
+        <ActivityIndicator 
+          size="large" 
+          color="#0000ff" 
+          style={styles.loading} 
+        />
+      )}
+      <WebView 
+        source={{ uri: 'https://wlu20.apps.tcjteam.tech/app/self-serve/?code=wealth12' }} 
+        style={styles.webview} 
+        onLoad={() => setLoading(false)}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        startInLoadingState={true}
+        scalesPageToFit={true}
       />
-      <StatusBar style="auto" />
     </View>
   );
-}
+};
+
 
 const styles = StyleSheet.create({
   container: {
@@ -30,4 +44,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 36,
   },
+  webview: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+  loading: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -25,
+    marginLeft: -25,
+  },
 });
+
+export default App;

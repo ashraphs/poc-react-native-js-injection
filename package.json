@@ -18,5 +18,8 @@
   "engines": {
     "node": ">=18"
   },
-  "name": "with-react-native-web"
+  "name": "with-react-native-web",
+  "dependencies": {
+    "react-native-webview": "^13.10.4"
+  }
 }
